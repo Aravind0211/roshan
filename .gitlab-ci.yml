@@ -1,13 +1,20 @@
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
 build:
   stage: build
-  script: echo "Build stage"
+  script:
+    - echo "Build stage"
+    - gradle --build-cache assemble
 
 test:
+  needs: ["build"]
   stage: test
   script: echo "Test stage"
 
 deploy:
+  needs: ["test"]
   stage: deploy
   script: echo "Define your deployment script!"
   environment: production
