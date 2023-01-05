@@ -5,10 +5,12 @@ build:
     - gradle --build-cache assemble
 
 test:
+  needs: ["build"]
   stage: test
   script: echo "Test stage"
 
 deploy:
+  needs: ["test"]
   stage: deploy
   script: echo "Define your deployment script!"
   environment: production
