@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'gradleSample'
-version = '0.0.1-SNAPSHOT'
+version = project.hasProperty('version') ? version : '1.0'
 sourceCompatibility = '1.8'
 
 repositories {
