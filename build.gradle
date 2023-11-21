@@ -21,3 +21,12 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+task buildZip(type: Zip) {
+	from compileJava
+	from processResources
+	into('lib') {
+		from 'build/libs'
+	}
+}
+
+build.dependsOn buildZip
