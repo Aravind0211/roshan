@@ -2,7 +2,7 @@ build:
   stage: build
   script:
     - echo "Build stage"
-    - gradle clean build
+    - ./gradlew clean build
 
 test:
   needs: ["build"]
