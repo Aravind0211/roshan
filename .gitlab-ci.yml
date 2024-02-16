@@ -1,5 +1,8 @@
 build:
   stage: build
+  only:
+    refs:
+      main
   script:
     - echo "Build stage"
     - ./gradlew clean build
