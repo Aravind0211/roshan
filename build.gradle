@@ -7,7 +7,14 @@ plugins {
 
 group = 'gradleSample'
 version = project.hasProperty('version') ? version : '1.0'
-sourceCompatibility = '1.8'
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
 
 repositories {
     mavenCentral()
