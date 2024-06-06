@@ -1,8 +1,8 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '2.7.7'
-	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-	id "org.sonarqube" version "2.7"
+    id 'java'
+    id 'org.springframework.boot' version '2.7.7'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id "org.sonarqube" version "2.7"
 }
 
 group = 'gradleSample'
@@ -10,23 +10,24 @@ version = project.hasProperty('version') ? version : '1.0'
 sourceCompatibility = '1.8'
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
+
 task buildZip(type: Zip) {
-	from compileJava
-	from processResources
-	into('lib') {
-		from 'build/libs'
-	}
+    from compileJava
+    from processResources
+    into('lib') {
+        from 'build/libs'
+    }
 }
 
 build.dependsOn buildZip
