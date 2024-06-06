@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cicd-service
+  namespace: default
+spec:
+  selector:
+    app: roshan
+  ports:
+    - protocol: "TCP"
+      port: 9099
+      targetPort: 9001  # This should match the containerPort in the deployment
+  type: LoadBalancer
