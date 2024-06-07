@@ -2,7 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.5.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
-    id 'org.cyclonedx.bom' version '1.7.4'  // Check for the latest version
+    id 'org.cyclonedx.bom' version '1.7.4'
     id 'maven-publish'
 }
 
@@ -24,7 +24,7 @@ test {
 }
 
 tasks.register('buildZip', Zip) {
-    dependsOn 'jar', 'bootJar'
+    dependsOn 'jar'
     from 'build/libs'
     into 'build/distributions'
     archiveFileName = 'your-archive-name.zip'
@@ -34,12 +34,11 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-
             pom {
                 withXml {
-                    def dependenciesNode = asNode().appendNode('dependencies')
+                    def depNode = asNode().appendNode('dependencies')
                     configurations.runtimeClasspath.resolvedConfiguration.resolvedArtifacts.each { artifact ->
-                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        def dependencyNode = depNode.appendNode('dependency')
                         dependencyNode.appendNode('groupId', artifact.moduleVersion.id.group)
                         dependencyNode.appendNode('artifactId', artifact.name)
                         dependencyNode.appendNode('version', artifact.moduleVersion.id.version)
@@ -51,7 +50,7 @@ publishing {
     }
     repositories {
         maven {
-            url = "http://192.168.1.30:8081/repository/roshan/"
+            url = uri("http://192.168.1.30:8081/repository/roshan/")
             credentials {
                 username = 'admin'
                 password = 'lfadmin'
