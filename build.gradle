@@ -35,18 +35,15 @@ publishing {
         mavenJava(MavenPublication) {
             from components.java
 
-            // Ensuring versions for all dependencies
             pom {
                 withXml {
                     def dependenciesNode = asNode().appendNode('dependencies')
-                    configurations.implementation.resolvedConfiguration.resolvedArtifacts.each { artifact ->
-                        if (artifact.moduleVersion.id.version) {
-                            def dependencyNode = dependenciesNode.appendNode('dependency')
-                            dependencyNode.appendNode('groupId', artifact.moduleVersion.id.group)
-                            dependencyNode.appendNode('artifactId', artifact.name)
-                            dependencyNode.appendNode('version', artifact.moduleVersion.id.version)
-                            dependencyNode.appendNode('scope', 'compile')
-                        }
+                    configurations.runtimeClasspath.resolvedConfiguration.resolvedArtifacts.each { artifact ->
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', artifact.moduleVersion.id.group)
+                        dependencyNode.appendNode('artifactId', artifact.name)
+                        dependencyNode.appendNode('version', artifact.moduleVersion.id.version)
+                        dependencyNode.appendNode('scope', 'runtime')
                     }
                 }
             }
