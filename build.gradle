@@ -3,12 +3,15 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
     id 'org.cyclonedx.bom' version '1.7.4'  // Check for the latest version
+    id 'maven-publish'
 
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
+group = 'com.logicfocus'
+version = '1.0.1'
 
 repositories {
     mavenCentral()
@@ -28,4 +31,20 @@ tasks.register('buildZip', Zip) {
     from 'build/libs'
     into 'build/distributions'
     archiveFileName = 'your-archive-name.zip'
+}
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url = "http://192.168.1.30:8081/repository/roshan/"
+            credentials {
+                username = 'admin'
+                password = 'lfadmin'
+            }
+        }
+    }
 }
