@@ -1,20 +1,12 @@
 plugins {
+    id 'org.springframework.boot' version '2.5.4'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
-    id 'org.springframework.boot' version '2.7.7'
-    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-    id "org.sonarqube" version "2.7"
 }
 
-group = 'gradleSample'
-version = project.hasProperty('version') ? version : '1.0'
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
-targetCompatibility = '17'
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-    }
-}
 
 repositories {
     mavenCentral()
@@ -25,16 +17,13 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
 }
 
-task buildZip(type: Zip) {
-    from compileJava
-    from processResources
-    into('lib') {
-        from 'build/libs'
-    }
+tasks.register('buildZip', Zip) {
+    dependsOn 'jar', 'bootJar'
+    from 'build/libs'
+    into 'build/distributions'
+    archiveFileName = 'your-archive-name.zip'
 }
-
-build.dependsOn buildZip
